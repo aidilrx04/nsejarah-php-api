@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Enable AUTHORIZATION REQUEST
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
