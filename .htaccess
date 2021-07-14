@@ -3,3 +3,6 @@ RewriteEngine On
 # Enable AUTHORIZATION REQUEST
 RewriteCond %{HTTP:Authorization} ^(.*)
 RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.html [L,QSA]
