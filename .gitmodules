@@ -1,0 +1,3 @@
+[submodule "development"]
+	path = development
+	url = https://github.com/aidilrx04/nsejarah-react-dev
