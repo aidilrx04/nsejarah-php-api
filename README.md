@@ -1,10 +1,8 @@
 # NSEJARAH-REACT
 ## ABOUT
----
 - AUTHOR: aidilrx04
 - REQUIREMENT: NodeJS, PHP, MySQL
 ## HOW TO USE
----
 1. Download this project and extract it to the folder that host your php files like [XAMPP htdocs](https://apachefriends.org)
 1. After that, Navigate to extracted folder using `command prompt`. Then, run `cd development` command
 1. Then, you need to install all the project dependencies by using `npm install` command.
