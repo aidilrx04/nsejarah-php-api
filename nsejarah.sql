@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2021 at 03:09 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Generation Time: Jul 15, 2021 at 06:49 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -67,18 +66,14 @@ CREATE TABLE IF NOT EXISTS `jawapan` (
 --
 
 INSERT INTO `jawapan` (`j_id`, `j_soalan`, `j_teks`) VALUES
-(3, 2, 'Hidupan di air tidak dipengaruhi oleh graviti'),
-(4, 2, 'Manalah saya tahu.'),
+(1, 1, 'Sample Jawapan 1 - Soalan 2 - Betul'),
+(2, 1, 'Sample Jawapan 2 - Soalan 2'),
+(3, 2, 'Sample Jawapan 1 - Soalan 1 - Betul'),
+(4, 2, 'Sample Jawapan 2 - Soalan 1'),
 (5, 3, 'Cicak - Kuiz'),
 (6, 3, 'Ikan - Kuiz'),
 (7, 4, 'Hidupan di air tidak dipengaruhi oleh graviti - Kuiz'),
-(8, 4, 'Manalah saya tahu. - Kuiz'),
-(9, 6, '123'),
-(10, 6, '1234'),
-(11, 6, '12345'),
-(12, 6, '123456'),
-(100, 37, 'Cicak'),
-(101, 37, 'Ikan');
+(8, 4, 'Manalah saya tahu. - Kuiz');
 
 -- --------------------------------------------------------
 
@@ -97,15 +92,6 @@ CREATE TABLE IF NOT EXISTS `jawapan_murid` (
   KEY `jm_soalan` (`jm_soalan`),
   KEY `jm_jawapan` (`jm_jawapan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `jawapan_murid`
---
-
-INSERT INTO `jawapan_murid` (`jm_id`, `jm_murid`, `jm_soalan`, `jm_jawapan`, `jm_status`) VALUES
-(134, 1, 2, 4, 0),
-(135, 1, 6, 12, 1),
-(136, 1, 37, 100, 1);
 
 -- --------------------------------------------------------
 
@@ -128,10 +114,7 @@ INSERT INTO `kelas` (`k_id`, `k_nama`) VALUES
 (2, 'Bestari'),
 (3, 'Cemerlang'),
 (4, 'Dinamik'),
-(5, 'Harmoni'),
-(6, 'Harmoni'),
-(7, 'Harmoni'),
-(8, 'NaeNae');
+(5, 'Harmoni');
 
 -- --------------------------------------------------------
 
@@ -158,8 +141,7 @@ INSERT INTO `kelas_tingkatan` (`kt_id`, `kt_ting`, `kt_kelas`, `kt_guru`) VALUES
 (2, 2, 1, 2),
 (3, 1, 2, 1),
 (4, 2, 2, 2),
-(5, 1, 3, 2),
-(8, 1, 8, 2);
+(5, 1, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -185,8 +167,8 @@ CREATE TABLE IF NOT EXISTS `kuiz` (
 --
 
 INSERT INTO `kuiz` (`kz_id`, `kz_nama`, `kz_guru`, `kz_ting`, `kz_tarikh`, `kz_jenis`, `kz_masa`) VALUES
-(1, 'Gunggung', 1, 1, '2025-04-02', 'latihan', NULL),
-(2, 'Bab 3: Kuiz GUNGGUNG', 1, 1, '2021-06-16', 'kuiz', 12);
+(1, 'Kuiz 1', 1, 1, '2025-04-02', 'latihan', NULL),
+(2, 'Kuiz 2', 1, 1, '2021-06-16', 'kuiz', 12);
 
 -- --------------------------------------------------------
 
@@ -216,31 +198,6 @@ INSERT INTO `murid` (`m_id`, `m_nokp`, `m_nama`, `m_katalaluan`, `m_kelas`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `skor_murid`
---
-
-CREATE TABLE IF NOT EXISTS `skor_murid` (
-  `sm_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `sm_murid` int(10) UNSIGNED NOT NULL,
-  `sm_kuiz` int(10) UNSIGNED NOT NULL,
-  `sm_skor` double(5,2) NOT NULL,
-  PRIMARY KEY (`sm_id`),
-  KEY `sm_murid` (`sm_murid`),
-  KEY `sm_kuiz` (`sm_kuiz`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `skor_murid`
---
-
-INSERT INTO `skor_murid` (`sm_id`, `sm_murid`, `sm_kuiz`, `sm_skor`) VALUES
-(1, 1, 1, 50.00),
-(2, 2, 1, 50.00),
-(3, 1, 2, 50.00);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `soalan`
 --
 
@@ -258,11 +215,10 @@ CREATE TABLE IF NOT EXISTS `soalan` (
 --
 
 INSERT INTO `soalan` (`s_id`, `s_kuiz`, `s_teks`, `s_gambar`) VALUES
-(2, 1, 'Mengapakah saiz hidupan laut lebih besar daripada daratan', NULL),
+(1, 1, 'Sample Soalan 1', NULL),
+(2, 1, 'Sample Soalan 2', NULL),
 (3, 2, 'Apakah nama haiwan ini. - Kuiz', 'https://upload.wikimedia.org/wikipedia/commons/1/1c/YosriCicak.jpg'),
-(4, 2, 'Mengapakah saiz hidupan laut lebih besar daripada daratan - Kuiz', NULL),
-(6, 1, 'Your mom', NULL),
-(37, 1, 'Apakah nama haiwan ini?', NULL);
+(4, 2, 'Mengapakah saiz hidupan laut lebih besar daripada daratan - Kuiz', NULL);
 
 -- --------------------------------------------------------
 
@@ -284,11 +240,10 @@ CREATE TABLE IF NOT EXISTS `soalan_jawapan` (
 --
 
 INSERT INTO `soalan_jawapan` (`sj_id`, `sj_soalan`, `sj_jawapan`) VALUES
+(1, 1, 1),
 (2, 2, 3),
 (3, 3, 5),
-(4, 4, 7),
-(5, 6, 12),
-(37, 37, 100);
+(4, 4, 7);
 
 --
 -- Constraints for dumped tables
@@ -327,13 +282,6 @@ ALTER TABLE `kuiz`
 --
 ALTER TABLE `murid`
   ADD CONSTRAINT `murid_ibfk_1` FOREIGN KEY (`m_kelas`) REFERENCES `kelas_tingkatan` (`kt_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `skor_murid`
---
-ALTER TABLE `skor_murid`
-  ADD CONSTRAINT `skor_murid_ibfk_1` FOREIGN KEY (`sm_murid`) REFERENCES `murid` (`m_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `skor_murid_ibfk_2` FOREIGN KEY (`sm_kuiz`) REFERENCES `kuiz` (`kz_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `soalan`
