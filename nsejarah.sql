@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2021 at 06:49 PM
+-- Generation Time: Jul 26, 2021 at 11:10 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -29,6 +29,7 @@ USE `nsejarah`;
 -- Table structure for table `guru`
 --
 
+DROP TABLE IF EXISTS `guru`;
 CREATE TABLE IF NOT EXISTS `guru` (
   `g_id` int(30) UNSIGNED NOT NULL AUTO_INCREMENT,
   `g_nokp` varchar(30) NOT NULL,
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `guru` (
   `g_jenis` enum('admin','guru') DEFAULT 'guru',
   PRIMARY KEY (`g_id`),
   UNIQUE KEY `g_nokp` (`g_nokp`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `guru`
@@ -53,27 +54,36 @@ INSERT INTO `guru` (`g_id`, `g_nokp`, `g_nama`, `g_katalaluan`, `g_jenis`) VALUE
 -- Table structure for table `jawapan`
 --
 
+DROP TABLE IF EXISTS `jawapan`;
 CREATE TABLE IF NOT EXISTS `jawapan` (
   `j_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `j_soalan` int(10) UNSIGNED NOT NULL,
   `j_teks` text NOT NULL,
   PRIMARY KEY (`j_id`),
   KEY `j_soalan` (`j_soalan`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `jawapan`
 --
 
 INSERT INTO `jawapan` (`j_id`, `j_soalan`, `j_teks`) VALUES
-(1, 1, 'Sample Jawapan 1 - Soalan 2 - Betul'),
-(2, 1, 'Sample Jawapan 2 - Soalan 2'),
-(3, 2, 'Sample Jawapan 1 - Soalan 1 - Betul'),
-(4, 2, 'Sample Jawapan 2 - Soalan 1'),
-(5, 3, 'Cicak - Kuiz'),
-(6, 3, 'Ikan - Kuiz'),
-(7, 4, 'Hidupan di air tidak dipengaruhi oleh graviti - Kuiz'),
-(8, 4, 'Manalah saya tahu. - Kuiz');
+(1, 1, 'Cicak'),
+(2, 1, 'Ikan'),
+(3, 1, 'Ayam'),
+(4, 1, 'Lipas'),
+(5, 2, 'Betul kot'),
+(6, 2, 'Hmm entahlah'),
+(7, 2, 'Tak tau'),
+(8, 2, 'Mungkin'),
+(9, 3, 'Cicak - Kuiz'),
+(10, 3, 'Ikan - Kuiz'),
+(11, 3, 'Ayam - Kuiz'),
+(12, 3, 'Lipas - Kuiz'),
+(13, 4, 'Betul kot - Kuiz'),
+(14, 4, 'Hmm entahlah - Kuiz'),
+(15, 4, 'Tak tau - Kuiz'),
+(16, 4, 'Mungkin - Kuiz');
 
 -- --------------------------------------------------------
 
@@ -81,6 +91,7 @@ INSERT INTO `jawapan` (`j_id`, `j_soalan`, `j_teks`) VALUES
 -- Table structure for table `jawapan_murid`
 --
 
+DROP TABLE IF EXISTS `jawapan_murid`;
 CREATE TABLE IF NOT EXISTS `jawapan_murid` (
   `jm_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `jm_murid` int(10) UNSIGNED NOT NULL,
@@ -91,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `jawapan_murid` (
   KEY `jm_murid` (`jm_murid`),
   KEY `jm_soalan` (`jm_soalan`),
   KEY `jm_jawapan` (`jm_jawapan`)
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -99,11 +110,12 @@ CREATE TABLE IF NOT EXISTS `jawapan_murid` (
 -- Table structure for table `kelas`
 --
 
+DROP TABLE IF EXISTS `kelas`;
 CREATE TABLE IF NOT EXISTS `kelas` (
   `k_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `k_nama` varchar(255) NOT NULL,
   PRIMARY KEY (`k_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kelas`
@@ -122,6 +134,7 @@ INSERT INTO `kelas` (`k_id`, `k_nama`) VALUES
 -- Table structure for table `kelas_tingkatan`
 --
 
+DROP TABLE IF EXISTS `kelas_tingkatan`;
 CREATE TABLE IF NOT EXISTS `kelas_tingkatan` (
   `kt_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `kt_ting` tinyint(1) UNSIGNED NOT NULL,
@@ -130,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `kelas_tingkatan` (
   PRIMARY KEY (`kt_id`),
   KEY `kt_kelas` (`kt_kelas`),
   KEY `kt_guru` (`kt_guru`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kelas_tingkatan`
@@ -149,6 +162,7 @@ INSERT INTO `kelas_tingkatan` (`kt_id`, `kt_ting`, `kt_kelas`, `kt_guru`) VALUES
 -- Table structure for table `kuiz`
 --
 
+DROP TABLE IF EXISTS `kuiz`;
 CREATE TABLE IF NOT EXISTS `kuiz` (
   `kz_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `kz_nama` varchar(255) NOT NULL,
@@ -160,15 +174,15 @@ CREATE TABLE IF NOT EXISTS `kuiz` (
   PRIMARY KEY (`kz_id`),
   KEY `kz_guru` (`kz_guru`),
   KEY `kz_ting` (`kz_ting`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kuiz`
 --
 
 INSERT INTO `kuiz` (`kz_id`, `kz_nama`, `kz_guru`, `kz_ting`, `kz_tarikh`, `kz_jenis`, `kz_masa`) VALUES
-(1, 'Kuiz 1', 1, 1, '2025-04-02', 'latihan', NULL),
-(2, 'Kuiz 2', 1, 1, '2021-06-16', 'kuiz', 12);
+(1, 'Gunggung', 1, 1, '2025-04-02', 'latihan', NULL),
+(2, 'Bab 3: Kuiz GUNGGUNG', 1, 1, '2021-06-16', 'kuiz', 12);
 
 -- --------------------------------------------------------
 
@@ -176,6 +190,7 @@ INSERT INTO `kuiz` (`kz_id`, `kz_nama`, `kz_guru`, `kz_ting`, `kz_tarikh`, `kz_j
 -- Table structure for table `murid`
 --
 
+DROP TABLE IF EXISTS `murid`;
 CREATE TABLE IF NOT EXISTS `murid` (
   `m_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `m_nokp` varchar(30) NOT NULL,
@@ -185,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `murid` (
   PRIMARY KEY (`m_id`,`m_nokp`),
   UNIQUE KEY `m_nokp` (`m_nokp`),
   KEY `m_kelas` (`m_kelas`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `murid`
@@ -193,7 +208,8 @@ CREATE TABLE IF NOT EXISTS `murid` (
 
 INSERT INTO `murid` (`m_id`, `m_nokp`, `m_nama`, `m_katalaluan`, `m_kelas`) VALUES
 (1, '111111111111', 'Soupeed', '123', 1),
-(2, '222222222222', 'Sudin', '123', 2);
+(2, '222222222222', 'Sudin', '123', 2),
+(3, '333333333333', 'Nuri', '123', 1);
 
 -- --------------------------------------------------------
 
@@ -201,6 +217,7 @@ INSERT INTO `murid` (`m_id`, `m_nokp`, `m_nama`, `m_katalaluan`, `m_kelas`) VALU
 -- Table structure for table `soalan`
 --
 
+DROP TABLE IF EXISTS `soalan`;
 CREATE TABLE IF NOT EXISTS `soalan` (
   `s_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `s_kuiz` int(10) UNSIGNED NOT NULL,
@@ -208,17 +225,17 @@ CREATE TABLE IF NOT EXISTS `soalan` (
   `s_gambar` text DEFAULT NULL,
   PRIMARY KEY (`s_id`),
   KEY `s_kuiz` (`s_kuiz`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `soalan`
 --
 
 INSERT INTO `soalan` (`s_id`, `s_kuiz`, `s_teks`, `s_gambar`) VALUES
-(1, 1, 'Sample Soalan 1', NULL),
-(2, 1, 'Sample Soalan 2', NULL),
-(3, 2, 'Apakah nama haiwan ini. - Kuiz', 'https://upload.wikimedia.org/wikipedia/commons/1/1c/YosriCicak.jpg'),
-(4, 2, 'Mengapakah saiz hidupan laut lebih besar daripada daratan - Kuiz', NULL);
+(1, 1, 'Apakah nama haiwan ini. - Kuiz', 'i-60fe7a1b91acc.jpg'),
+(2, 1, 'Betul ke tak?', NULL),
+(3, 2, 'Apakah nama haiwan ini. - Kuiz', 'i-60fe7a3f673df.jpg'),
+(4, 2, 'Betul ke tak? - Kuiz', NULL);
 
 -- --------------------------------------------------------
 
@@ -226,6 +243,7 @@ INSERT INTO `soalan` (`s_id`, `s_kuiz`, `s_teks`, `s_gambar`) VALUES
 -- Table structure for table `soalan_jawapan`
 --
 
+DROP TABLE IF EXISTS `soalan_jawapan`;
 CREATE TABLE IF NOT EXISTS `soalan_jawapan` (
   `sj_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `sj_soalan` int(10) UNSIGNED NOT NULL,
@@ -233,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `soalan_jawapan` (
   PRIMARY KEY (`sj_id`),
   KEY `sj_soalan` (`sj_soalan`),
   KEY `sj_jawapan` (`sj_jawapan`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `soalan_jawapan`
@@ -241,9 +259,9 @@ CREATE TABLE IF NOT EXISTS `soalan_jawapan` (
 
 INSERT INTO `soalan_jawapan` (`sj_id`, `sj_soalan`, `sj_jawapan`) VALUES
 (1, 1, 1),
-(2, 2, 3),
-(3, 3, 5),
-(4, 4, 7);
+(2, 2, 5),
+(3, 3, 9),
+(4, 4, 13);
 
 --
 -- Constraints for dumped tables
