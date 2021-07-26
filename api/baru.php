@@ -63,8 +63,10 @@ if (Input::is_method('post')) {
 
                 //register soalan if exist
                 $senarai_soalan = $data['soalan'] ?? [];
+                $constructed_id = [];
                 foreach ($senarai_soalan as $soalan) {
                     if ($id_soalan = register_soalan($id_kuiz, $soalan)) {
+                        $constructed_id[$id_soalan] =  $soalan['s_id'];
                         $senarai_jawapan = $soalan['jawapan'] ?? [];
                         $jawapan_betul = $soalan['jawapan_betul'] ?? [];
 
@@ -81,6 +83,17 @@ if (Input::is_method('post')) {
                 }
 
                 $output = get_kuiz($id_kuiz);
+                // return old id with new one
+                $keys = array_keys( $constructed_id);
+                foreach( $output['soalan'] as $i=>$soalan)
+                {
+                    
+                    if( in_array($soalan['s_id'], $keys))
+                    {
+                        
+                        $output['soalan'][$i]['old_id'] = $constructed_id[$soalan['s_id']];
+                    }
+                }
             }
             break;
 

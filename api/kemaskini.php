@@ -21,7 +21,34 @@ if (Input::is_method('post')) {
         if ($update_kuiz) {
 
             $senarai_soalan = $data_update['soalan'] ?? [];
+            $constructed_id = [];
             $delete = $data_update['padam'] ?? [];
+            $gambar_padam = $data_update['gambar_padam'] ?? [];
+            
+            // add delete soalan gambar to gambar padam
+            foreach( $delete as $s)
+            {
+                array_push( $gambar_name, $s['s_id']);
+            }
+
+            foreach( $gambar_padam as $id_soalan )
+            {
+                $gambar_name = single_get_query("SELECT s_gambar FROM soalan WHERE s_id = ?", $id_soalan)['s_gambar'];
+                $target_dir = '../image/';
+
+                // workaround if gambar is url
+                if( substr($gambar_name, 0, 4) === 'http')
+                {
+                    continue;
+                }
+
+                // delete file
+                if( unlink( $target_dir . $gambar_name) )
+                {
+                    // update database
+                    bool_query("UPDATE soalan SET s_gambar = NULL WHERE s_id = ?", $id_soalan);
+                }
+            }
 
             // filter out all padam soalan
             $senarai_soalan = array_filter($senarai_soalan, function ($soalan) {
@@ -42,6 +69,7 @@ if (Input::is_method('post')) {
             // note: all soalan and jawapan will ignore failure and continue operation
             foreach ($update as $soalan_update) {
                 $updated_soalan = update_soalan($soalan_update); // update soalan
+                $constructed_id[$updated_soalan['s_id']] = $soalan_update['s_id'];
                 $senarai_jawapan = $soalan_update['jawapan'] ?? [];
                 $jawapan_betul = $soalan_update['jawapan_betul'] ?? NULL;
 
@@ -60,7 +88,7 @@ if (Input::is_method('post')) {
                 //  ? note: this to prevent from soalan having correct answer and breaking the app
                 if ($jawapan_betul) {
                     $registered_soalan = register_soalan($update_kuiz['kz_id'], $soalan_new);
-
+                    $constructed_id[$registered_soalan] = $soalan_new['s_id'];
                     // ? note: only register jawapan when soalan is registered
                     if ($registered_soalan) {
                         $senarai_jawapan = $soalan_new['jawapan'] ?? [];
@@ -84,6 +112,14 @@ if (Input::is_method('post')) {
             }
 
             $data = get_kuiz($data_update['kz_id']);
+            $keys = array_keys($constructed_id);
+            foreach( $data['soalan'] as $i=>$soalan )
+            {
+                if( in_array($soalan['s_id'], $keys))
+                {
+                    $data['soalan'][$i]['old_id'] = $constructed_id[$soalan['s_id']];
+                }
+            }
         }
     } else {
         Auth::use(['admin']);
