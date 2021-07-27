@@ -6,7 +6,7 @@ require_once 'conn.php';
 
 if( Input::is_method('post'))
 {
-    Auth::use(['admin']);
+    Auth::use(['admin', 'guru']);
 
     $gambar_list = $_FILES;
     $target_dir = '../image/';
