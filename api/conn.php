@@ -213,7 +213,10 @@ function single_get_query($query, ...$data)
 {
     global $conn;
     if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param(str_repeat('s', count($data)), ...$data);
+
+        if (!empty($data)) {
+            $stmt->bind_param(str_repeat('s', count($data)), ...$data);
+        }
         $stmt->execute();
         $result = $stmt->get_result();
 
