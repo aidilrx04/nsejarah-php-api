@@ -2,7 +2,7 @@
 
 require 'conn.php';
 
-sleep( 2 );
+// sleep(2);
 
 if (Input::is_method('get')) {
     $keyword = Input::get_data('keyword');
@@ -12,6 +12,7 @@ if (Input::is_method('get')) {
     $order = Input::get_data('order') ?? "DESC";
 
     $keyword_query = $keyword ? " WHERE kz_nama LIKE '%{$keyword}%' " : '';
+
 
 
     if ($order === 'random') {
