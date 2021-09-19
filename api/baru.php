@@ -84,13 +84,11 @@ if (Input::is_method('post')) {
 
                 $output = get_kuiz($id_kuiz);
                 // return old id with new one
-                $keys = array_keys( $constructed_id);
-                foreach( $output['soalan'] as $i=>$soalan)
-                {
-                    
-                    if( in_array($soalan['s_id'], $keys))
-                    {
-                        
+                $keys = array_keys($constructed_id);
+                foreach ($output['soalan'] as $i => $soalan) {
+
+                    if (in_array($soalan['s_id'], $keys)) {
+
                         $output['soalan'][$i]['old_id'] = $constructed_id[$soalan['s_id']];
                     }
                 }
@@ -167,6 +165,9 @@ function register_kelas($data)
 
 function register_tingkatan($data)
 {
+    // allow tingkatan registration without a teacher?
+    $data['kt_guru'] = $data['kt_guru'] === '' ? null : $data['kt_guru'];
+
     $id_ting = insert_query(
         "INSERT INTO kelas_tingkatan(kt_ting, kt_kelas, kt_guru) VALUE (?,?,?)",
         $data['kt_ting'],
@@ -183,6 +184,7 @@ function register_tingkatan($data)
 
 function register_kuiz($data)
 {
+
     $id_kuiz = insert_query(
         "INSERT INTO kuiz(kz_nama, kz_guru, kz_ting, kz_tarikh, kz_jenis, kz_masa) VALUE (?,?,?,?,?,?)",
         $data['kz_nama'],
